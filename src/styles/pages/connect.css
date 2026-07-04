@@ -1,0 +1,65 @@
+.connect-form { margin-bottom: 26px; }
+.provider-pill { display: flex; align-items: center; gap: 8px; font-size: var(--font-small); color: var(--muted); }
+.provider-pill span { width: 30px; height: 30px; border-radius: 9px; background: var(--accent); color: #fff; display: grid; place-items: center; font-weight: 900; }
+.provider-logo { width: 36px; height: 36px; border-radius: var(--radius-md); background: var(--accent); display: grid; place-items: center; font-weight: 900; color: #fff; }
+
+.connection-form-grid { display: grid; grid-template-columns: .7fr .7fr 1.2fr; gap: 14px; padding: 0 22px; }
+.connection-form-grid label { margin: 17px 0 0; color: var(--text-secondary); font-size: var(--font-small); font-weight: 650; }
+.connection-form-grid input { display: block; width: 100%; height: 43px; border: 1px solid var(--line-strong); background: var(--panel-inset); border-radius: var(--radius-md); color: var(--text); padding: 0 13px; outline: none; margin-top: 7px; }
+.connect-form-footer { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin: 18px 22px 0; }
+.connect-form-footer .privacy-box { margin: 0; flex: 1; }
+.connect-form-footer .primary-button { flex: none; }
+
+.connections-section { margin-top: 18px; }
+.section-title { display: flex; justify-content: space-between; align-items: end; margin-bottom: 13px; }
+.section-title h3 { font-size: 16px; }
+.section-title p { font-size: var(--font-micro); color: var(--muted); margin-top: 4px; }
+.section-title > span { font-size: var(--font-micro); color: var(--green); padding: 6px 9px; border: 1px solid color-mix(in srgb, var(--green) 20%, transparent); background: var(--green-soft); border-radius: var(--radius-full); }
+
+.merchant-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.merchant-card { position: relative; overflow: hidden; padding: 18px; background: linear-gradient(145deg, var(--panel), var(--panel-2)); border: 1px solid var(--line-strong); border-radius: var(--radius-lg); }
+.merchant-card.disabled { opacity: .68; }
+.merchant-card-top { display: flex; justify-content: space-between; align-items: center; }
+.merchant-brand { display: flex; align-items: center; gap: 10px; }
+.merchant-brand > span { width: 40px; height: 40px; border-radius: var(--radius-md); background: linear-gradient(135deg, var(--accent), #4868ed); display: grid; place-items: center; font-weight: 900; color: #fff; }
+.merchant-brand small, .merchant-brand strong { display: block; }
+.merchant-brand small { font-size: 8px; color: var(--accent-contrast); letter-spacing: .09em; }
+.merchant-brand strong { font-size: var(--font-small); margin-top: 3px; }
+.more-button { width: 34px; height: 34px; border: 1px solid var(--line); background: color-mix(in srgb, var(--text) 2%, transparent); border-radius: 9px; display: grid; place-items: center; color: var(--text); }
+.more-button svg { width: 16px; }
+.merchant-upi { margin: 17px 0; padding: 12px; background: var(--panel-inset); border: 1px solid var(--line); border-radius: var(--radius-sm); }
+.merchant-upi span, .merchant-upi strong { display: block; }
+.merchant-upi span { font-size: 8px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
+.merchant-upi strong { font-size: var(--font-small); color: var(--accent-contrast); margin-top: 4px; overflow: hidden; text-overflow: ellipsis; }
+.merchant-facts { display: grid; grid-template-columns: .7fr .8fr 1.2fr; gap: 9px; }
+.merchant-facts > div { padding: 10px; background: color-mix(in srgb, var(--text) 2%, transparent); border-radius: 9px; }
+.merchant-facts small, .merchant-facts strong { display: block; }
+.merchant-facts small { font-size: 8px; color: var(--muted); }
+.merchant-facts strong { font-size: var(--font-micro); margin-top: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.connection-status { display: flex !important; align-items: center; gap: 5px; }
+.connection-status i { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+.connection-status.active, .settlement-on { color: var(--green); }
+.connection-status.disabled { color: var(--muted); }
+.merchant-card-footer { display: flex; gap: 8px; margin-top: 14px; padding-top: 13px; border-top: 1px solid var(--line); }
+.merchant-card-footer button { height: 34px; padding: 0 10px; border: 1px solid var(--line); background: transparent; border-radius: 8px; display: flex; align-items: center; gap: 6px; font-size: 9px; color: var(--text); }
+.merchant-card-footer svg { width: 13px; }
+.default-ribbon { position: absolute; right: -31px; top: 13px; transform: rotate(45deg); width: 100px; text-align: center; background: var(--accent); color: #fff; font-size: 7px; padding: 3px; }
+
+/* Legacy compact list variant (kept for any future list-view toggle) */
+.connections-panel { margin-top: 18px; }
+.connection-list article { display: grid; grid-template-columns: auto 1fr auto minmax(140px, .5fr); align-items: center; gap: 13px; padding: 16px 22px; border-bottom: 1px solid var(--line); }
+.connection-avatar { width: 39px; height: 39px; border-radius: var(--radius-md); background: var(--panel-2); display: grid; place-items: center; font-weight: 800; }
+.connection-main strong, .connection-main span, .connection-main small, .connection-meta span, .connection-bank strong, .connection-bank span { display: block; }
+.connection-main strong, .connection-bank strong { font-size: var(--font-small); }
+.connection-main span { font-size: 10px; color: var(--accent-contrast); margin-top: 3px; }
+.connection-main small, .connection-meta span, .connection-bank span { font-size: 9px; color: var(--muted); margin-top: 3px; }
+.connection-meta, .connection-bank { text-align: right; }
+
+@media (max-width: 900px) { .connection-form-grid { grid-template-columns: 1fr; } .merchant-grid { grid-template-columns: 1fr; } }
+@media (max-width: 600px) {
+  .connect-form-footer { align-items: stretch; flex-direction: column; }
+  .connect-form-footer .primary-button { width: 100%; }
+  .merchant-facts { grid-template-columns: 1fr 1fr; }
+  .merchant-facts > div:last-child { grid-column: 1/-1; }
+  .detail-list { grid-template-columns: 1fr; }
+}

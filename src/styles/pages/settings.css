@@ -1,0 +1,32 @@
+.settings-stack { display: grid; gap: 16px; }
+.settings-card { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 16px; padding: 22px; }
+.settings-icon { width: 44px; height: 44px; border-radius: var(--radius-md); background: var(--accent-soft); color: var(--accent-contrast); display: grid; place-items: center; }
+.settings-card h3 { font-size: 14px; }
+.settings-card p { font-size: var(--font-small); color: var(--muted); margin: 5px 0 13px; }
+.settings-card select { height: 38px; min-width: 180px; border: 1px solid var(--line); background: var(--panel-inset); color: var(--text); border-radius: 9px; padding: 0 11px; }
+.saved-message { font-size: var(--font-micro); color: var(--green); margin-left: 10px; }
+.settings-card .primary-button svg { width: 15px; }
+
+.password-settings { padding: 22px; }
+.password-settings-head { display: flex; align-items: center; gap: 13px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+.password-settings-head h3 { font-size: 14px; }
+.password-settings-head p { font-size: var(--font-small); color: var(--muted); margin-top: 4px; }
+.password-settings-head > span { margin-left: auto; display: flex; align-items: center; gap: 5px; color: var(--green); font-size: var(--font-micro); }
+.password-settings-head > span svg { width: 14px; }
+.password-settings form { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 12px; align-items: start; padding-top: 18px; }
+.password-settings label { font-size: var(--font-micro); color: var(--muted); }
+.password-settings input { display: block; width: 100%; height: 40px; margin-top: 6px; padding: 0 11px; border: 1px solid var(--line); background: var(--panel-inset); color: var(--text); border-radius: 9px; }
+.password-settings form > .primary-button { margin-top: 15px; }
+.password-settings form > .alert { grid-column: 1/-1; margin: 0; }
+.password-settings .password-strength small { max-width: 220px; }
+
+@media (max-width: 900px) {
+  .password-settings form { grid-template-columns: 1fr 1fr; }
+  .password-settings form > .primary-button { margin-top: 0; }
+}
+@media (max-width: 600px) {
+  .settings-card { grid-template-columns: auto 1fr; }
+  .settings-card .primary-button { grid-column: 1/-1; }
+  .password-settings form { grid-template-columns: 1fr; }
+  .password-settings-head > span { display: none; }
+}

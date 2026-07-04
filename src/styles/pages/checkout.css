@@ -1,0 +1,54 @@
+/* Public hosted checkout page. Kept lean (no dependency on shell/dashboard CSS).
+   NOTE: .pay-card / .paid-check / .confetti-piece / .checkout-status / .qr-shell are
+   referenced by literal string inside CheckoutPage.jsx's gsap.from/gsap.to calls —
+   do not rename these classes without updating that file in the same change. */
+
+.checkout { min-height: 100vh; display: grid; place-items: center; padding: 25px; background: var(--bg); position: relative; overflow: hidden; }
+/* Soft glow via radial-gradient instead of a blurred solid — avoids the filter/backdrop-filter
+   compositing cost of a real blur while giving the same ambient-glow look. */
+.checkout-orb { position: fixed; border-radius: 50%; }
+.checkout-orb.one { width: 560px; height: 560px; left: -180px; top: -220px; background: radial-gradient(circle, color-mix(in srgb, var(--accent) 30%, transparent), transparent 70%); }
+.checkout-orb.two { width: 480px; height: 480px; right: -140px; bottom: -220px; background: radial-gradient(circle, color-mix(in srgb, #0ea5e9 26%, transparent), transparent 70%); }
+
+.pay-card { width: min(420px, 100%); position: relative; background: var(--panel); border: 1px solid var(--line-strong); border-radius: 22px; padding: 22px; box-shadow: var(--shadow-lg); }
+.checkout-head { display: flex; align-items: center; gap: 11px; }
+.checkout-brand { width: 42px; height: 42px; border-radius: var(--radius-md); background: linear-gradient(135deg, var(--accent), #3b82f6); display: grid; place-items: center; font-weight: 900; color: #fff; }
+.checkout-head p { font-size: 9px; color: var(--muted); }
+.checkout-head strong { font-size: var(--font-small); }
+.checkout-head > span { margin-left: auto; font-size: 23px; font-weight: 850; }
+
+.qr-shell { width: 248px; height: 248px; margin: 28px auto 10px; padding: 10px; background: #fff; border-radius: 17px; box-shadow: 0 0 0 7px rgba(255, 255, 255, .05); }
+.qr-shell img { width: 100%; height: 100%; display: block; }
+.scan-copy { text-align: center; font-size: var(--font-small); color: var(--muted); margin-bottom: 24px; }
+.upi-pay-button { height: 42px; margin: 0 auto 18px; width: 248px; border: 1px solid var(--accent-line); background: var(--accent-soft); color: var(--accent-contrast); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; gap: 7px; font-size: var(--font-small); font-weight: 700; }
+.upi-pay-button svg { width: 16px; }
+
+.checkout-person { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+.checkout-person > div { padding: 11px; border: 1px solid var(--line); border-radius: var(--radius-sm); }
+.checkout-person span, .checkout-person strong, .checkout-person small { display: block; }
+.checkout-person span { font-size: 8px; color: var(--muted); text-transform: uppercase; }
+.checkout-person strong { font-size: var(--font-micro); margin-top: 4px; }
+.checkout-person small { font-size: 8px; color: var(--muted-2); margin-top: 3px; overflow: hidden; text-overflow: ellipsis; }
+
+.payment-detail, .receipt-row { display: flex; justify-content: space-between; padding: 13px 0; border-top: 1px solid var(--line); font-size: var(--font-small); }
+.payment-detail span, .receipt-row span { color: var(--muted); }
+.checkout-status { display: flex; align-items: center; gap: 8px; padding: 13px; border: 1px solid color-mix(in srgb, var(--amber) 22%, transparent); background: var(--amber-soft); border-radius: var(--radius-md); margin-top: 10px; font-size: 10px; }
+.checkout-status i { width: 7px; height: 7px; background: var(--amber); border-radius: 50%; box-shadow: 0 0 0 4px var(--amber-soft); }
+.checkout-status strong { margin-left: auto; color: var(--amber); font-variant-numeric: tabular-nums; }
+.pay-card footer { display: flex; align-items: center; justify-content: center; gap: 6px; color: var(--muted-2); font-size: var(--font-micro); margin-top: 18px; }
+.pay-card footer svg { width: 13px; }
+
+.return-button { width: 100%; margin-top: 20px; }
+.paid-state { text-align: center; padding: 35px 5px; }
+.paid-check { width: 64px; height: 64px; margin: 0 auto 18px; border-radius: 50%; display: grid; place-items: center; background: var(--green-soft); border: 1px solid color-mix(in srgb, var(--green) 22%, transparent); color: var(--green); }
+.paid-state h1 { font-size: 40px; margin: 8px 0; }
+.paid-state > p:not(.eyebrow) { color: var(--muted); font-size: var(--font-small); margin-bottom: 25px; }
+.expired-state { text-align: center; padding: 35px 8px; }
+.expired-state > svg { width: 48px; height: 48px; color: var(--amber); margin-bottom: 14px; }
+.expired-state h2 { font-size: 22px; }
+.expired-state > p:not(.eyebrow) { font-size: var(--font-small); color: var(--muted); margin: 9px 0 20px; }
+
+.confetti-layer { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.confetti-piece { position: absolute; top: 75px; width: 8px; height: 12px; border-radius: 2px; z-index: 2; }
+
+[data-theme="light"] .checkout { background: #eef1f7; }

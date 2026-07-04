@@ -1,0 +1,16 @@
+import { useEffect,useState } from 'react';
+import { CheckCircle2,KeyRound } from 'lucide-react';
+import { Link,useSearchParams } from 'react-router-dom';
+import api from '../lib/api';
+import PasswordInput from '../components/PasswordInput';
+
+export default function ResetPasswordPage(){
+  const [params]=useSearchParams();const token=params.get('token');const [state,setState]=useState({loading:true,email:'',error:''});const [form,setForm]=useState({password:'',confirmPassword:''});const [done,setDone]=useState(false);const [busy,setBusy]=useState(false);
+  useEffect(()=>{if(!token){setState({loading:false,error:'Password reset token is missing.'});return}api.get(`/auth/password-reset/${encodeURIComponent(token)}`).then(({data})=>setState({loading:false,email:data.email,error:''})).catch(err=>setState({loading:false,error:err.response?.data?.message||'Reset link is invalid.'}))},[token]);
+  const strength=passwordStrength(form.password);
+  const mismatch=Boolean(form.confirmPassword&&form.password!==form.confirmPassword);
+  const submit=async event=>{event.preventDefault();setBusy(true);setState(current=>({...current,error:''}));try{await api.post('/auth/reset-password',{token,...form});setDone(true)}catch(err){setState(current=>({...current,error:err.response?.data?.message||'Password reset failed.'}))}finally{setBusy(false)}};
+  return <div className="activation-page"><main className="activation-card reset-card"><div className="activation-icon">{done?<CheckCircle2/>:<KeyRound/>}</div><p className="eyebrow accent">Secure password reset</p><h1>{done?'Password updated':'Choose a new password'}</h1>{state.loading?<p>Validating your reset link…</p>:done?<><p>Every existing session has been signed out. Use the new password to access Pay-Panda.</p><Link className="primary-button" to="/login">Continue to login</Link></>:state.error&&!state.email?<><div className="alert error">{state.error}</div><Link className="primary-button" to="/forgot-password">Request another link</Link></>:<form onSubmit={submit}><p>Resetting password for <strong>{state.email}</strong>. This link can only be used once.</p><label>New password<PasswordInput minLength="6" required value={form.password} onChange={e=>setForm({...form,password:e.target.value})}/></label><div className="password-strength"><div className="strength-track"><i style={{width:`${strength.score*25}%`}} className={`strength-${strength.score}`}/></div><div><span>{strength.label}</span><small>Minimum 6 characters; mixed characters improve strength</small></div></div><label>Confirm new password<PasswordInput className={mismatch?'input-invalid':''} minLength="6" required value={form.confirmPassword} onChange={e=>setForm({...form,confirmPassword:e.target.value})}/>{mismatch&&<span className="field-error">Passwords do not match.</span>}</label>{state.error&&<div className="alert error">{state.error}</div>}<button className="primary-button" disabled={busy||mismatch}>{busy?'Updating…':'Reset password'}</button></form>}</main></div>;
+}
+
+function passwordStrength(value){if(!value)return{score:0,label:'Enter a secure password'};let score=0;if(value.length>=6)score++;if(/[a-z]/.test(value)&&/[A-Z]/.test(value))score++;if(/\d/.test(value))score++;if(/[^A-Za-z\d]/.test(value)&&!/\s/.test(value))score++;return{score,label:['Very weak','Weak','Fair','Good','Strong'][score]}}

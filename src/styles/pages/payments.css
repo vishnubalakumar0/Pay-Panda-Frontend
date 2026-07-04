@@ -1,0 +1,41 @@
+/* CreatePaymentPage + HistoryPage (checkout itself lives in checkout.css) */
+
+.payment-description { padding: 11px; margin: 8px 0; border: 1px solid var(--line); background: color-mix(in srgb, var(--text) 2%, transparent); border-radius: var(--radius-sm); }
+.payment-description span { display: block; font-size: 8px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+.payment-description p { font-size: var(--font-micro); line-height: 1.5; margin-top: 5px; }
+
+.history-summary { display: grid; grid-template-columns: 1fr 1fr 1.3fr; gap: 12px; margin-bottom: 14px; }
+.history-summary article { display: flex; align-items: center; gap: 12px; padding: 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 13px; }
+.history-summary article > span { width: 36px; height: 36px; border-radius: var(--radius-sm); background: var(--accent-soft); color: var(--accent-contrast); display: grid; place-items: center; }
+.history-summary svg { width: 17px; }
+.history-summary small, .history-summary strong { display: block; }
+.history-summary small { font-size: var(--font-micro); color: var(--muted); }
+.history-summary strong { font-size: 15px; margin-top: 3px; }
+
+.history-filters { display: flex; justify-content: space-between; gap: 15px; padding: 14px 20px; border-bottom: 1px solid var(--line); }
+.preset-tabs { display: flex; gap: 5px; flex-wrap: wrap; }
+.preset-tabs button { height: 32px; padding: 0 10px; border: 1px solid var(--line); background: transparent; border-radius: 8px; color: var(--muted); font-size: var(--font-micro); }
+.preset-tabs button.active { background: var(--accent-soft); border-color: var(--accent-line); color: var(--accent-contrast); }
+.date-inputs { display: flex; gap: 8px; }
+.date-inputs label { font-size: 8px; color: var(--muted); }
+.date-inputs input { display: block; margin-top: 3px; height: 29px; background: var(--panel-inset); color: var(--text); border: 1px solid var(--line); border-radius: 7px; padding: 0 7px; font-size: 9px; }
+
+.history-actions { display: flex; gap: 5px; }
+.history-actions button, .history-actions a { width: 30px; height: 30px; border: 1px solid var(--line); background: transparent; border-radius: 7px; display: grid; place-items: center; color: var(--text); }
+.history-actions svg { width: 13px; }
+.muted-dash { color: var(--muted); }
+.history-qr-modal { position: relative; width: min(350px, 100%); padding: 25px; background: var(--panel); border: 1px solid var(--line); border-radius: 17px; text-align: center; }
+.history-qr-modal > button { position: absolute; right: 12px; top: 12px; width: 31px; height: 31px; border: 1px solid var(--line); background: transparent; border-radius: 8px; color: var(--text); }
+.history-qr-modal > button svg { width: 13px; }
+.history-qr-modal img { display: block; width: 220px; height: 220px; margin: 15px auto; padding: 7px; background: #fff; border-radius: 13px; }
+.history-qr-modal strong, .history-qr-modal small { display: block; }
+.history-qr-modal small { color: var(--muted); font-size: var(--font-micro); margin-top: 5px; }
+
+@media (max-width: 900px) { .history-summary { grid-template-columns: 1fr 1fr; } .range-card { grid-column: 1/-1; } .history-filters { flex-direction: column; } }
+@media (max-width: 600px) {
+  .history-summary { grid-template-columns: 1fr; }
+  .range-card { grid-column: auto; }
+  .date-inputs { width: 100%; }
+  .date-inputs label { flex: 1; }
+  .date-inputs input { width: 100%; }
+}

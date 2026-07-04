@@ -1,0 +1,108 @@
+/* Design tokens. Dark is the default (:root); light overrides live in [data-theme="light"].
+   Every other stylesheet must consume these variables instead of literal colors/sizes. */
+
+:root {
+  color-scheme: dark;
+
+  /* surfaces */
+  --bg: #080b12;
+  --bg-elevated: rgba(8, 11, 18, 0.97);
+  --panel: #10151f;
+  --panel-2: #151b27;
+  --panel-inset: #0b1018;
+  --line: #222b3a;
+  --line-strong: #2a3445;
+  --overlay: rgba(3, 5, 11, 0.72);
+
+  /* text */
+  --text: #edf1f7;
+  --text-secondary: #bdc5d3;
+  --muted: #8791a3;
+  --muted-2: #657086;
+
+  /* brand + status */
+  --accent: #8b5cf6;
+  --accent-contrast: #a78bfa;
+  --accent-soft: color-mix(in srgb, var(--accent) 12%, transparent);
+  --accent-soft-strong: color-mix(in srgb, var(--accent) 20%, transparent);
+  --accent-line: color-mix(in srgb, var(--accent) 45%, transparent);
+  --cyan: #36d6c9;
+  --cyan-soft: color-mix(in srgb, var(--cyan) 14%, transparent);
+  --green: #2dd4a0;
+  --green-soft: color-mix(in srgb, var(--green) 10%, transparent);
+  --amber: #f5b942;
+  --amber-soft: color-mix(in srgb, var(--amber) 10%, transparent);
+  --red: #fb7185;
+  --red-soft: color-mix(in srgb, var(--red) 10%, transparent);
+
+  /* elevation */
+  --shadow-sm: 0 8px 20px rgba(0, 0, 0, 0.22);
+  --shadow-md: 0 18px 45px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.03);
+  --shadow-lg: 0 30px 90px -12px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  --shadow-glow-accent: 0 10px 28px rgba(124, 58, 237, 0.26);
+
+  /* spacing (4px scale) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+  --space-9: 48px;
+
+  /* radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-full: 999px;
+
+  /* typography */
+  --font-display: clamp(44px, 5vw, 72px);
+  --font-h1: 28px;
+  --font-h2: 22px;
+  --font-h3: 15px;
+  --font-body: 13px;
+  --font-small: 11px;
+  --font-micro: 9px;
+  --tracking-tight: -0.04em;
+  --tracking-wide: 0.11em;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  --bg: #f3f5fa;
+  --bg-elevated: rgba(243, 245, 250, 0.97);
+  --panel: #ffffff;
+  --panel-2: #f8f9fc;
+  --panel-inset: #eef1f7;
+  --line: #dfe4ed;
+  --line-strong: #cdd4e2;
+  --overlay: rgba(30, 38, 58, 0.48);
+
+  --text: #172033;
+  --text-secondary: #3d4759;
+  --muted: #687386;
+  --muted-2: #8891a1;
+
+  --accent: #7c3aed;
+  --accent-contrast: #6d28d9;
+  --accent-soft: color-mix(in srgb, var(--accent) 8%, transparent);
+  --accent-soft-strong: color-mix(in srgb, var(--accent) 14%, transparent);
+  --accent-line: color-mix(in srgb, var(--accent) 30%, transparent);
+  --cyan: #0891a1;
+  --cyan-soft: color-mix(in srgb, var(--cyan) 10%, transparent);
+  --green: #0d9c74;
+  --green-soft: color-mix(in srgb, var(--green) 10%, transparent);
+  --amber: #b45f06;
+  --amber-soft: color-mix(in srgb, var(--amber) 10%, transparent);
+  --red: #e11d48;
+  --red-soft: color-mix(in srgb, var(--red) 8%, transparent);
+
+  --shadow-sm: 0 6px 16px rgba(38, 54, 82, 0.06);
+  --shadow-md: 0 14px 34px rgba(38, 54, 82, 0.07), 0 0 0 1px rgba(23, 32, 51, 0.03);
+  --shadow-lg: 0 24px 60px rgba(38, 54, 82, 0.14), 0 0 0 1px rgba(23, 32, 51, 0.04);
+  --shadow-glow-accent: 0 10px 24px rgba(124, 58, 237, 0.16);
+}

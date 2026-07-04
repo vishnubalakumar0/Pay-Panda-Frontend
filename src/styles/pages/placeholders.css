@@ -1,0 +1,108 @@
+/* Bespoke "coming soon" pages: Payment Options, Payment Theme, Subscription, SDK,
+   Documentation, Default Link, Subscription History. All read-only mock content. */
+
+.preview-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: var(--radius-full); background: var(--accent-soft); color: var(--accent-contrast); font-size: var(--font-micro); font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+
+/* Payment options */
+.option-list { padding: 6px 22px 22px; display: grid; gap: 10px; }
+.toggle-row { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px; padding: 14px; border: 1px solid var(--line); border-radius: var(--radius-md); }
+.toggle-row-icon { width: 38px; height: 38px; border-radius: var(--radius-sm); background: var(--accent-soft); color: var(--accent-contrast); display: grid; place-items: center; }
+.toggle-row strong { font-size: var(--font-small); }
+.toggle-row p { font-size: var(--font-micro); color: var(--muted); margin-top: 3px; }
+.toggle-switch { width: 42px; height: 24px; border-radius: var(--radius-full); border: 1px solid var(--line-strong); background: var(--panel-inset); position: relative; flex: none; }
+.toggle-switch i { position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%; background: var(--muted); transition: transform .18s ease, background .18s ease; display: block; }
+.toggle-switch.on { background: var(--accent-soft-strong); border-color: var(--accent-line); }
+.toggle-switch.on i { transform: translateX(18px); background: var(--accent); }
+
+.mini-checkout {
+  width: 100%; max-width: 280px; margin: 0 auto; padding: 18px; border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg); background: var(--swatch-panel, var(--panel-inset)); color: var(--swatch-text, var(--text));
+  overflow: hidden;
+}
+.mini-avatar { width: 30px; height: 30px; border-radius: 9px; background: var(--swatch-accent, var(--accent)); color: #fff; display: grid; place-items: center; font-weight: 900; font-size: 12px; flex: none; }
+.mini-checkout-head { display: flex; align-items: center; gap: 9px; margin-bottom: 14px; }
+.mini-checkout-head small, .mini-split-info small, .mini-banner small { display: block; font-size: 9px; color: var(--swatch-muted, var(--muted)); }
+.mini-checkout-head strong, .mini-split-info strong, .mini-banner strong { display: block; font-size: 12px; }
+.mini-checkout-head em, .mini-banner em { margin-left: auto; font-style: normal; font-weight: 800; font-size: 15px; }
+.mini-qr {
+  width: 100%; aspect-ratio: 1; max-width: 160px; margin: 0 auto 14px; border-radius: var(--radius-md); opacity: .8;
+  background: repeating-conic-gradient(var(--swatch-muted, var(--muted-2)) 0% 25%, transparent 0% 50%) 50% / 14px 14px;
+}
+.mini-checkout .upi-pay-button {
+  border-color: var(--swatch-accent, var(--accent-line)); color: var(--swatch-accent, var(--accent-contrast));
+  background: color-mix(in srgb, var(--swatch-accent, var(--accent)) 14%, transparent);
+}
+
+/* Payment theme — each preset is a structurally distinct layout, not a recolor */
+.theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 6px 22px 10px; }
+.theme-swatch { position: relative; padding: 14px; border: 1px solid var(--line); background: transparent; border-radius: var(--radius-md); text-align: left; display: grid; gap: 6px; }
+.theme-swatch.active { border-color: var(--accent-line); box-shadow: 0 0 0 3px var(--accent-soft); }
+.theme-swatch-preview { display: block; height: 44px; border-radius: var(--radius-sm); background: linear-gradient(135deg, var(--swatch-accent), var(--swatch-bg)); }
+.theme-swatch strong { font-size: var(--font-small); }
+.theme-swatch small { display: block; font-size: 9px; color: var(--muted); }
+.theme-swatch-check { position: absolute; right: 12px; top: 12px; width: 16px; color: var(--accent-contrast); }
+.theme-detail { padding: 0 22px 22px; font-size: var(--font-small); color: var(--muted); line-height: 1.6; }
+.theme-preview-panel { min-height: 420px; }
+
+/* layout-daylight: split — details + amount beside the QR */
+.mini-checkout.layout-daylight { max-width: 340px; padding: 0; }
+.mini-split { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; padding: 20px; }
+.mini-split-info { display: grid; gap: 4px; }
+.mini-split-amount { font-size: 20px; font-weight: 800; margin: 6px 0 10px; }
+.mini-split-info .upi-pay-button { width: auto; margin: 0; height: 36px; padding: 0 12px; font-size: 10px; }
+.mini-split-qr .mini-qr { margin: 0; max-width: 110px; }
+
+/* layout-emerald: QR-first minimal — no header chrome at all */
+.mini-checkout.layout-emerald { text-align: center; padding: 26px 18px; }
+.mini-qr-large { max-width: 190px; margin-bottom: 16px; opacity: .85; }
+.mini-minimal-amount { display: block; font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+.layout-emerald small { color: var(--swatch-muted); font-size: 10px; }
+
+/* layout-sunrise: bold color banner above the card body */
+.mini-checkout.layout-sunrise { padding: 0; }
+.mini-banner { display: flex; align-items: center; gap: 10px; padding: 16px 18px; background: var(--swatch-accent); color: #fff; }
+.mini-banner small { color: #ffffffb0 !important; }
+.mini-banner-body { padding: 18px; }
+
+/* Subscription */
+.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 18px; }
+.pricing-tier { position: relative; padding: 22px; text-align: center; }
+.pricing-tier.current { border-color: var(--accent-line); box-shadow: 0 0 0 3px var(--accent-soft); }
+.pricing-badge { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); padding: 4px 10px; border-radius: var(--radius-full); background: var(--accent); color: #fff; font-size: 8px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.pricing-tier h3 { font-size: 16px; }
+.pricing-amount { margin: 12px 0 16px; }
+.pricing-amount strong { font-size: 30px; letter-spacing: var(--tracking-tight); }
+.pricing-amount span { font-size: var(--font-small); color: var(--muted); }
+.pricing-features { list-style: none; padding: 0; margin: 0 0 18px; display: grid; gap: 9px; text-align: left; }
+.pricing-features li { display: flex; align-items: center; gap: 8px; font-size: var(--font-small); color: var(--text-secondary); }
+.pricing-features svg { color: var(--green); flex: none; }
+.usage-panel { padding-bottom: 22px; }
+.usage-meter { padding: 6px 22px 0; }
+.usage-meter-labels { display: flex; justify-content: space-between; margin-top: 8px; font-size: var(--font-small); }
+.usage-meter-labels small { color: var(--muted); }
+
+/* SDK */
+.sdk-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
+.sdk-card { padding: 18px; text-align: left; background: var(--panel); border: 1px solid var(--line); cursor: pointer; }
+.sdk-card.active { border-color: var(--accent-line); box-shadow: 0 0 0 3px var(--accent-soft); }
+.sdk-card strong { display: block; font-size: var(--font-small); }
+.sdk-card small { display: block; color: var(--muted); font-size: var(--font-micro); margin-top: 4px; }
+.sdk-download { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-size: var(--font-micro); color: var(--muted); }
+
+/* Documentation */
+.docs-layout { display: grid; grid-template-columns: 220px 1fr; }
+.docs-nav { border-right: 1px solid var(--line); padding: 14px; }
+.docs-nav ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 3px; }
+.docs-nav button { width: 100%; display: flex; align-items: center; gap: 9px; padding: 10px 11px; border: 0; background: transparent; border-radius: var(--radius-sm); color: var(--muted); font-size: var(--font-small); text-align: left; }
+.docs-nav button.active { background: var(--accent-soft); color: var(--accent-contrast); }
+.docs-content { padding: 24px; }
+.docs-content h3 { font-size: 18px; }
+.docs-content > p { font-size: var(--font-small); color: var(--muted); margin: 8px 0 16px; }
+.docs-content pre { margin: 0; background: var(--panel-inset); border: 1px solid var(--line-strong); border-radius: var(--radius-md); padding: 16px; color: var(--accent-contrast); font-size: var(--font-small); overflow: auto; white-space: pre; }
+
+@media (max-width: 900px) {
+  .pricing-grid { grid-template-columns: 1fr; }
+  .sdk-grid { grid-template-columns: repeat(2, 1fr); }
+  .docs-layout { grid-template-columns: 1fr; }
+  .docs-nav { border-right: 0; border-bottom: 1px solid var(--line); }
+}

@@ -1,0 +1,26 @@
+/* Keyframes shared by GSAP-driven and CSS-only transitions, plus a global reduced-motion safety net.
+   GSAP call sites gate themselves via gsap.matchMedia; this is the belt-and-suspenders CSS-only fallback
+   for the plain transitions/:active states that are intentionally NOT GSAP (see lib/motion.js). */
+
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pop-in { from { opacity: 0; transform: scale(.94) translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes toast-in { from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: none; } }
+
+.spin { animation: spin 1s linear infinite; }
+
+.primary-button, .secondary-button, .icon-button, .menu-button, .mobile-close,
+.risk-button, .info-button, .more-button, .modal-close, .sidebar-toggle,
+.merchant-card-footer button, .credential-actions button, .history-actions button {
+  transition: transform .12s ease, background .18s ease, border-color .18s ease, color .18s ease, box-shadow .18s ease;
+}
+.primary-button:active:not(:disabled), .secondary-button:active, .risk-button:active, .info-button:active { transform: scale(.97); }
+.icon-button:active, .menu-button:active, .mobile-close:active, .more-button:active, .modal-close:active, .sidebar-toggle:active { transform: scale(.92); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

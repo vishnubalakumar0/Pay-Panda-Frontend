@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import { Copy, ExternalLink, QrCode, RefreshCw, Settings2 } from 'lucide-react';
-import api from '../lib/api';
+import api, { assetUrl } from '../lib/api';
 import PageHeader from '../components/PageHeader';
 import { useAuth } from '../state/auth-store';
 import { useUi } from '../state/ui-store';
@@ -30,6 +30,6 @@ export default function CreatePaymentPage(){
       <label>Payment expiry<div className="select-wrap"><Settings2/><select value={form.expires_in_minutes} onChange={e=>setForm({...form,expires_in_minutes:e.target.value})}><option value="5">5 minutes</option><option value="10">10 minutes</option><option value="15">15 minutes</option><option value="30">30 minutes</option><option value="60">60 minutes</option></select></div><small className="field-help">This QR expires automatically if no matching payment is received.</small></label>
       {error&&<div className="alert error">{error}</div>}<button className="primary-button" disabled={busy}>{busy?<RefreshCw className="spin"/>:<QrCode/>}{busy?'Creating secure QR…':'Create payment QR'}</button>
     </form>
-    <aside className="panel result-panel" ref={resultRef}>{result?<><div className="result-check">✓</div><p className="eyebrow accent">Payment ready</p><img className="result-qr" src={result.qrPath} alt="Generated payment QR"/><h3>₹{Number(result.amount).toFixed(2)}</h3><span>{result.orderId} · expires {new Date(result.expiresAt).toLocaleTimeString()}</span><div className="link-box"><code>{result.checkoutUrl}</code><button onClick={()=>navigator.clipboard.writeText(result.checkoutUrl)}><Copy/></button></div><a className="primary-button" href={result.checkoutUrl} target="_blank" rel="noreferrer">Open checkout<ExternalLink/></a></>:<div className="empty-state"><QrCode/><h4>Your checkout appears here</h4><p>Complete the form to generate a secure payment page.</p></div>}</aside>
+    <aside className="panel result-panel" ref={resultRef}>{result?<><div className="result-check">✓</div><p className="eyebrow accent">Payment ready</p><img className="result-qr" src={assetUrl(result.qrPath)} alt="Generated payment QR"/><h3>₹{Number(result.amount).toFixed(2)}</h3><span>{result.orderId} · expires {new Date(result.expiresAt).toLocaleTimeString()}</span><div className="link-box"><code>{result.checkoutUrl}</code><button onClick={()=>navigator.clipboard.writeText(result.checkoutUrl)}><Copy/></button></div><a className="primary-button" href={result.checkoutUrl} target="_blank" rel="noreferrer">Open checkout<ExternalLink/></a></>:<div className="empty-state"><QrCode/><h4>Your checkout appears here</h4><p>Complete the form to generate a secure payment page.</p></div>}</aside>
   </div></>;
 }

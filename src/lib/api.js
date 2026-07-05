@@ -1,6 +1,16 @@
 import axios from 'axios';
 
-const api = axios.create({ baseURL: '/api', timeout: 20000 });
+const API_URL = import.meta.env.VITE_API_URL || '/api';
+const api = axios.create({ baseURL: API_URL, timeout: 20000 });
+
+/** Backend JSON responses (and hand-built QR image paths) use a server-relative
+ * `/api/...` path, which only resolves correctly when the frontend and API share an
+ * origin (the old same-origin dev-proxy setup). Once the frontend is deployed
+ * separately (e.g. Vercel) with VITE_API_URL pointing at a different origin, those
+ * paths need the `/api` prefix swapped for the real API origin. */
+export function assetUrl(path) {
+  return path?.startsWith('/api') ? path.replace(/^\/api/, API_URL) : path;
+}
 api.interceptors.request.use(config => {
   const token = localStorage.getItem('pay_panda_token');
   if (token) config.headers.Authorization = `Bearer ${token}`;

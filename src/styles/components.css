@@ -179,7 +179,8 @@ td small { font-size: var(--font-micro); color: var(--muted-2); margin-top: 4px;
 .global-dialog.danger .dialog-symbol { background: var(--red-soft); color: var(--red); }
 .global-dialog h3 { font-size: 18px; }
 .global-dialog > p { font-size: var(--font-small); line-height: 1.6; color: var(--muted); margin: 8px auto 20px; max-width: 330px; }
-.global-dialog > div:last-child { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.dialog-actions { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; width: 100%; margin-top: 4px; }
+.dialog-actions button { width: 100%; padding: 0 14px; white-space: nowrap; }
 .dialog-cancel, .dialog-confirm { height: 40px; border-radius: var(--radius-sm); font-size: var(--font-small); font-weight: 750; }
 .dialog-cancel { border: 1px solid var(--line); background: transparent; color: var(--text); }
 .dialog-confirm { border: 0; background: var(--accent-contrast); color: #fff; }

@@ -5,6 +5,7 @@ import adminApi from '../../lib/adminApi';
 import { useAdminAuth } from '../../state/admin-auth-store';
 import PasswordInput from '../../components/PasswordInput';
 import { useUi } from '../../state/ui-store';
+import payLogo from '../../assets/pay logo.png';
 
 export default function AdminLoginPage() {
   const [form, setForm] = useState({ email: '', password: '' });
@@ -25,7 +26,7 @@ export default function AdminLoginPage() {
   };
   return <div className="auth-layout">
     <section className="auth-story">
-      <div className="brand auth-brand"><div className="brand-mark">A</div><strong>Pay-Panda Admin</strong></div>
+      <div className="brand auth-brand"><img className="brand-mark" src={payLogo} alt="Pay-Panda" /><strong>Pay-Panda Admin</strong></div>
       <div>
         <p className="eyebrow accent">Platform operations</p>
         <h1>Oversee every business on Pay-Panda.</h1>

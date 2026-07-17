@@ -4,6 +4,7 @@ import { useAdminAuth } from '../../state/admin-auth-store';
 import usePageTransition from '../../hooks/usePageTransition';
 import useSmoothScroll from '../../hooks/useSmoothScroll';
 import { LayoutDashboard, Building2, Layers, LogOut, Menu, X, Moon, Sun } from 'lucide-react';
+import payLogo from '../../assets/pay logo.png';
 
 const items = [
   { to: '/admin/overview', icon: LayoutDashboard, label: 'Overview' },
@@ -27,7 +28,7 @@ export default function AdminLayout() {
   return <div className="shell">
     {open && <button className="sidebar-backdrop" aria-label="Close menu" onClick={() => setOpen(false)} />}
     <aside className={`sidebar ${open ? 'is-open' : ''}`}>
-      <div className="brand"><div className="brand-mark">A</div><div className="brand-copy"><strong>Pay-Panda</strong><span>Admin console</span></div><button className="mobile-close" onClick={() => setOpen(false)}><X /></button></div>
+      <div className="brand"><img className="brand-mark" src={payLogo} alt="Pay-Panda" /><div className="brand-copy"><strong>Pay-Panda</strong><span>Admin console</span></div><button className="mobile-close" onClick={() => setOpen(false)}><X /></button></div>
       <nav className="nav-scroll">
         <div className="nav-section">
           <p>Platform</p>

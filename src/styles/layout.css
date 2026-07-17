@@ -9,7 +9,7 @@
   transition: background .2s ease, border-color .2s ease;
 }
 .brand { height: 84px; padding: 0 22px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--line); }
-.brand-mark { width: 40px; height: 40px; border-radius: var(--radius-md); display: grid; place-items: center; background: linear-gradient(135deg, var(--accent), #5b8cff); font-weight: 900; box-shadow: var(--shadow-glow-accent); color: #fff; }
+.brand-mark { width: 40px; height: 40px; border-radius: var(--radius-md); object-fit: contain; display: block; }
 .brand strong { display: block; font-size: 16px; }
 .brand span { display: block; color: var(--muted); font-size: var(--font-small); margin-top: 3px; }
 

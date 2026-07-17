@@ -8,6 +8,7 @@ import {
 import { useAuth } from '../state/auth-store';
 import useSmoothScroll from '../hooks/useSmoothScroll';
 import { gsap, REDUCED_MOTION_QUERY, EASE_ENTRANCE } from '../lib/motion';
+import payLogo from '../assets/pay logo.png';
 
 const features = [
   { icon: KeyRound, title: 'OAuth-secured payment API', text: 'Server-to-server integration with client-credential app_id / app_secret pairs and short-lived bearer tokens — no long-lived keys sitting in your code.' },
@@ -53,7 +54,7 @@ export default function LandingPage() {
 
   return <div className="landing" ref={rootRef}>
     <header className="landing-nav">
-      <Link className="brand" to="/"><div className="brand-mark">P</div><strong>Pay-Panda</strong></Link>
+      <Link className="brand" to="/"><img className="brand-mark" src={payLogo} alt="Pay-Panda" /><strong>Pay-Panda</strong></Link>
       <nav>
         <a href="#features">Features</a>
         <a href="#how-it-works">How it works</a>
@@ -140,7 +141,7 @@ export default function LandingPage() {
     </section>
 
     <footer className="landing-footer">
-      <div className="brand"><div className="brand-mark">P</div><strong>Pay-Panda</strong></div>
+      <div className="brand"><img className="brand-mark" src={payLogo} alt="Pay-Panda" /><strong>Pay-Panda</strong></div>
       <p>© {new Date().getFullYear()} Pay-Panda. UPI payment verification, not a payment aggregator.</p>
     </footer>
   </div>;

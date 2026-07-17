@@ -10,6 +10,7 @@ import {
   Code2, BookOpen, Link2, History, ReceiptIndianRupee, Settings, Headphones,
   LogOut, Menu, X, Moon, Sun, ChevronLeft, ChevronRight, PlusCircle, Building2,
 } from 'lucide-react';
+import payLogo from '../assets/pay logo.png';
 
 const sections = [
   { label: 'Overview', items: [{ to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' }] },
@@ -68,7 +69,7 @@ export default function AppLayout() {
   return <div className={`shell ${collapsed ? 'sidebar-collapsed' : ''}`}>
     {open && <button className="sidebar-backdrop" aria-label="Close menu" onClick={() => setOpen(false)} />}
     <aside className={`sidebar ${open ? 'is-open' : ''}`}>
-      <div className="brand"><div className="brand-mark">P</div><div className="brand-copy"><strong>Pay-Panda</strong><span>Payments, verified.</span></div><button className="sidebar-toggle" title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'} aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'} onClick={() => setCollapsed(!collapsed)}>{collapsed ? <ChevronRight/> : <ChevronLeft/>}</button><button className="mobile-close" onClick={() => setOpen(false)}><X /></button></div>
+      <div className="brand"><img className="brand-mark" src={payLogo} alt="Pay-Panda" /><div className="brand-copy"><strong>Pay-Panda</strong><span>Payments, verified.</span></div><button className="sidebar-toggle" title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'} aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'} onClick={() => setCollapsed(!collapsed)}>{collapsed ? <ChevronRight/> : <ChevronLeft/>}</button><button className="mobile-close" onClick={() => setOpen(false)}><X /></button></div>
       <nav className="nav-scroll">
         {sections.map(section => <div className="nav-section" key={section.label}>
           <p>{section.label}</p>

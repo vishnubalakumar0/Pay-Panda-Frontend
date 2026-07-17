@@ -9,6 +9,7 @@ import PasswordInput from '../components/PasswordInput';
 import AuthLoader from '../components/AuthLoader';
 import OtpInput from '../components/OtpInput';
 import { gsap, REDUCED_MOTION_QUERY, EASE_ENTRANCE } from '../lib/motion';
+import payLogo from '../assets/pay logo.png';
 
 const OTP_RESEND_SECONDS = 60;
 
@@ -75,7 +76,7 @@ export default function AuthPage({ mode }) {
   return <div className="auth-layout">
     {busy && <div className="auth-loading-overlay"><AuthLoader label={otpState?'Verifying your code…':signup?'Creating your workspace…':'Signing you in…'}/></div>}
     <section className="auth-story">
-      <Link className="brand auth-brand" to="/"><div className="brand-mark">P</div><strong>Pay-Panda</strong></Link>
+      <Link className="brand auth-brand" to="/"><img className="brand-mark" src={payLogo} alt="Pay-Panda" /><strong>Pay-Panda</strong></Link>
       <div ref={storyRef}>
         <p className="eyebrow accent">UPI infrastructure for modern teams</p>
         <h1>Payments that confirm themselves.</h1>

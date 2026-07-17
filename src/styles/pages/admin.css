@@ -27,6 +27,18 @@
 .admin-platform-toggle { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 4px 22px 22px; padding: 13px; border: 1px solid var(--line); border-radius: var(--radius-md); }
 .admin-platform-toggle strong { font-size: var(--font-small); }
 .admin-platform-toggle p { font-size: var(--font-micro); color: var(--muted); margin-top: 4px; }
+.admin-inline-create {
+  display: grid; grid-template-columns: minmax(160px, 1fr) minmax(130px, .7fr) minmax(180px, 1fr) auto;
+  gap: 12px; align-items: end; padding: 18px 22px; border-bottom: 1px solid var(--line);
+}
+.admin-inline-create label { color: var(--text-secondary); font-size: var(--font-micro); font-weight: 750; }
+.admin-inline-create input {
+  display: block; width: 100%; height: 40px; margin-top: 6px; padding: 0 12px;
+  border: 1px solid var(--line-strong); background: var(--panel-inset); color: var(--text);
+  border-radius: var(--radius-sm); outline: none;
+}
+.admin-inline-create input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.admin-inline-create .primary-button { height: 40px; min-height: 40px; white-space: nowrap; }
 .admin-supervision-list { display: grid; gap: 10px; margin: 0 22px 22px; }
 .admin-supervision-list div {
   display: grid; grid-template-columns: 18px 1fr auto; align-items: center; gap: 10px;
@@ -52,4 +64,5 @@
 
 @media (max-width: 1050px) {
   .admin-grid { grid-template-columns: 1fr; }
+  .admin-inline-create { grid-template-columns: 1fr; }
 }

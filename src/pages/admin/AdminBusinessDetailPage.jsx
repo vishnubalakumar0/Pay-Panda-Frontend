@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, ShieldOff, ShieldCheck, RefreshCw, X, Layers, Landmark, Building2, KeyRound, Link2, ReceiptIndianRupee } from 'lucide-react';
+import { ArrowLeft, ShieldOff, ShieldCheck, RefreshCw, X, Layers, Landmark, Building2, KeyRound, Link2, ReceiptIndianRupee, Store, ToggleLeft, ToggleRight } from 'lucide-react';
 import adminApi from '../../lib/adminApi';
 import PageHeader from '../../components/PageHeader';
 import { useUi } from '../../state/ui-store';
@@ -20,6 +20,8 @@ export default function AdminBusinessDetailPage() {
   const [showSuspend, setShowSuspend] = useState(false);
   const [reason, setReason] = useState('');
   const [busy, setBusy] = useState(false);
+  const [unitBusy, setUnitBusy] = useState(false);
+  const [unitForm, setUnitForm] = useState({ name: '', code: '', description: '' });
   const modalRef = useRef(null);
   const { toast, confirm } = useUi();
   useModalEnter(modalRef, '.modal-card', showSuspend);
@@ -89,6 +91,26 @@ export default function AdminBusinessDetailPage() {
     } catch (err) { toast(err.response?.data?.message || 'Could not update platform designation', 'error'); }
   };
 
+  const createUnit = async event => {
+    event.preventDefault();
+    setUnitBusy(true);
+    try {
+      await adminApi.post(`/admin/businesses/${id}/business-units`, { ...unitForm, code: slug(unitForm.code || unitForm.name) });
+      setUnitForm({ name: '', code: '', description: '' });
+      toast('Sub-business created for this business', 'success');
+      load();
+    } catch (err) { toast(err.response?.data?.message || 'Could not create sub-business', 'error'); }
+    finally { setUnitBusy(false); }
+  };
+
+  const toggleUnit = async unit => {
+    try {
+      await adminApi.patch(`/admin/businesses/${id}/business-units/${unit.id}`, { active: !unit.active });
+      toast(!unit.active ? 'Sub-business enabled' : 'Sub-business disabled', 'success');
+      load();
+    } catch (err) { toast(err.response?.data?.message || 'Could not update sub-business', 'error'); }
+  };
+
   if (loading) return <div className="empty-cell"><RefreshCw className="spin"/> Loading business…</div>;
   if (!business) return <div className="empty-state"><h4>Business not found</h4><p>It may have been removed.</p></div>;
 
@@ -133,9 +155,15 @@ export default function AdminBusinessDetailPage() {
 
     <section className="panel">
       <div className="panel-heading"><div><h3>Sub-business supervision</h3><p>Collections are still settled through the same business account, but reporting is separated by unit.</p></div><Building2/></div>
-      <div className="table-wrap"><table><thead><tr><th>Unit</th><th>Code</th><th>Status</th><th>Payments</th><th>Total amount</th></tr></thead><tbody>
-        <tr><td><strong>Main business</strong><small>Payments without a sub-business tag</small></td><td>main</td><td><span className="status status-active"><i/>ACTIVE</span></td><td>{mainUnitTotals?.count || 0}</td><td>₹{Number(mainUnitTotals?.amount || 0).toLocaleString('en-IN')}</td></tr>
-        {business.businessUnits?.length ? business.businessUnits.map(unit => <tr key={unit.id}><td><strong>{unit.name}</strong><small>{unit.description || '—'}</small></td><td><code>{unit.code}</code></td><td><span className={`status ${unit.active ? 'status-active' : 'status-disabled'}`}><i/>{unit.active ? 'ACTIVE' : 'DISABLED'}</span></td><td>{unit.totals?.count || 0}</td><td>₹{Number(unit.totals?.amount || 0).toLocaleString('en-IN')}</td></tr>) : null}
+      <form className="admin-inline-create" onSubmit={createUnit}>
+        <label>Name<input required placeholder="Branch A, Retail counter…" value={unitForm.name} onChange={e => setUnitForm({ ...unitForm, name: e.target.value, code: unitForm.code || slug(e.target.value) })}/></label>
+        <label>Code<input required placeholder="branch-a" value={unitForm.code} onChange={e => setUnitForm({ ...unitForm, code: slug(e.target.value) })}/></label>
+        <label>Description<input placeholder="Optional internal note" value={unitForm.description} onChange={e => setUnitForm({ ...unitForm, description: e.target.value })}/></label>
+        <button className="primary-button compact" disabled={unitBusy}>{unitBusy ? <RefreshCw className="spin"/> : <Store/>}{unitBusy ? 'Creating…' : 'Create sub-business'}</button>
+      </form>
+      <div className="table-wrap"><table><thead><tr><th>Unit</th><th>Code</th><th>Status</th><th>Payments</th><th>Total amount</th><th></th></tr></thead><tbody>
+        <tr><td><strong>Main business</strong><small>Payments without a sub-business tag</small></td><td>main</td><td><span className="status status-active"><i/>ACTIVE</span></td><td>{mainUnitTotals?.count || 0}</td><td>₹{Number(mainUnitTotals?.amount || 0).toLocaleString('en-IN')}</td><td><span className="muted-dash">—</span></td></tr>
+        {business.businessUnits?.length ? business.businessUnits.map(unit => <tr key={unit.id}><td><strong>{unit.name}</strong><small>{unit.description || '—'}</small></td><td><code>{unit.code}</code></td><td><span className={`status ${unit.active ? 'status-active' : 'status-failed'}`}><i/>{unit.active ? 'ACTIVE' : 'DISABLED'}</span></td><td>{unit.totals?.count || 0}</td><td>₹{Number(unit.totals?.amount || 0).toLocaleString('en-IN')}</td><td><button className="text-action" onClick={() => toggleUnit(unit)}>{unit.active ? <ToggleRight/> : <ToggleLeft/>}{unit.active ? 'Disable' : 'Enable'}</button></td></tr>) : null}
       </tbody></table></div>
     </section>
 
@@ -191,4 +219,8 @@ export default function AdminBusinessDetailPage() {
 function formatDate(value) {
   if (!value) return '—';
   return new Date(value).toLocaleString();
+}
+
+function slug(value) {
+  return String(value || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40);
 }

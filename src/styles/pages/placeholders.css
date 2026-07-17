@@ -117,6 +117,9 @@
 .sdk-download { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-size: var(--font-micro); color: var(--muted); }
 
 /* Documentation */
+.docs-checklist { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
+.docs-checklist article { display: flex; align-items: center; gap: 10px; padding: 14px; font-size: var(--font-small); color: var(--text-secondary); }
+.docs-checklist svg { width: 17px; color: var(--green); flex: none; }
 .docs-layout { display: grid; grid-template-columns: 220px 1fr; }
 .docs-nav { border-right: 1px solid var(--line); padding: 14px; }
 .docs-nav ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 3px; }
@@ -131,6 +134,7 @@
   .pricing-grid { grid-template-columns: 1fr; }
   .trial-panel { align-items: stretch; flex-direction: column; }
   .trial-actions { justify-items: stretch; }
+  .docs-checklist { grid-template-columns: 1fr 1fr; }
   .sdk-grid { grid-template-columns: repeat(2, 1fr); }
   .docs-layout { grid-template-columns: 1fr; }
   .docs-nav { border-right: 0; border-bottom: 1px solid var(--line); }

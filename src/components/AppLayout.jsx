@@ -8,7 +8,7 @@ import SidebarTooltip from '../components/SidebarTooltip';
 import {
   LayoutDashboard, QrCode, SlidersHorizontal, Palette, BadgeIndianRupee, KeyRound,
   Code2, BookOpen, Link2, History, ReceiptIndianRupee, Settings, Headphones,
-  LogOut, Menu, X, Moon, Sun, ChevronLeft, ChevronRight, PlusCircle,
+  LogOut, Menu, X, Moon, Sun, ChevronLeft, ChevronRight, PlusCircle, Building2,
 } from 'lucide-react';
 
 const sections = [
@@ -25,6 +25,7 @@ const sections = [
     { to: '/documentation', icon: BookOpen, label: 'Documentation' },
   ]},
   { label: 'Payments', items: [
+    { to: '/business-units', icon: Building2, label: 'Sub-businesses' },
     { to: '/payments/create', icon: PlusCircle, label: 'Create payment' },
     { to: '/default-link', icon: Link2, label: 'Default link' },
     { to: '/payments/history', icon: History, label: 'Payment history' },

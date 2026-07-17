@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, ShieldOff, ShieldCheck, RefreshCw, X, Layers, Landmark } from 'lucide-react';
+import { ArrowLeft, ShieldOff, ShieldCheck, RefreshCw, X, Layers, Landmark, Building2, KeyRound, Link2, ReceiptIndianRupee } from 'lucide-react';
 import adminApi from '../../lib/adminApi';
 import PageHeader from '../../components/PageHeader';
 import { useUi } from '../../state/ui-store';
@@ -11,6 +11,10 @@ export default function AdminBusinessDetailPage() {
   const navigate = useNavigate();
   const [business, setBusiness] = useState(null);
   const [paymentTotals, setPaymentTotals] = useState(null);
+  const [paymentStatusBreakdown, setPaymentStatusBreakdown] = useState({});
+  const [mainUnitTotals, setMainUnitTotals] = useState(null);
+  const [recentPayments, setRecentPayments] = useState([]);
+  const [providerTransactions, setProviderTransactions] = useState([]);
   const [plans, setPlans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showSuspend, setShowSuspend] = useState(false);
@@ -23,7 +27,15 @@ export default function AdminBusinessDetailPage() {
   const load = () => {
     setLoading(true);
     Promise.all([adminApi.get(`/admin/businesses/${id}`), adminApi.get('/admin/plans')])
-      .then(([b, p]) => { setBusiness(b.data.business); setPaymentTotals(b.data.paymentTotals); setPlans(p.data.plans); })
+      .then(([b, p]) => {
+        setBusiness(b.data.business);
+        setPaymentTotals(b.data.paymentTotals);
+        setPaymentStatusBreakdown(b.data.paymentStatusBreakdown || {});
+        setMainUnitTotals(b.data.mainUnitTotals || null);
+        setRecentPayments(b.data.recentPayments || []);
+        setProviderTransactions(b.data.recentProviderTransactions || []);
+        setPlans(p.data.plans);
+      })
       .catch(() => toast('Could not load business', 'error')).finally(() => setLoading(false));
   };
   useEffect(load, [id]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -92,8 +104,9 @@ export default function AdminBusinessDetailPage() {
     <section className="metric-grid">
       <article className="metric-card violet"><p>Users</p><strong>{business.users.length}</strong></article>
       <article className="metric-card blue"><p>Connections</p><strong>{business.connections.length}</strong></article>
+      <article className="metric-card amber"><p>Sub-businesses</p><strong>{business.businessUnits?.length || 0}</strong></article>
       <article className="metric-card green"><p>Successful payments</p><strong>{paymentTotals?.count ?? 0}</strong></article>
-      <article className="metric-card amber"><p>Collected amount</p><strong>₹{(paymentTotals?.amount || 0).toLocaleString('en-IN')}</strong></article>
+      <article className="metric-card blue"><p>Collected amount</p><strong>₹{(paymentTotals?.amount || 0).toLocaleString('en-IN')}</strong></article>
     </section>
 
     <section className="admin-grid">
@@ -104,19 +117,61 @@ export default function AdminBusinessDetailPage() {
           <div><strong>Platform fee collector</strong><p>{business.isPlatform ? 'This business collects Pay-Panda subscription fee payments.' : 'Not currently collecting platform fees.'}</p></div>
           <button className={business.isPlatform ? 'risk-button' : 'info-button'} onClick={togglePlatform}><Landmark size={14}/>{business.isPlatform ? 'Unset' : 'Set as platform'}</button>
         </div>
+        <div className="admin-supervision-list">
+          <div><KeyRound size={15}/><span>API credentials</span><strong>{business._count?.apiClients || 0}</strong></div>
+          <div><ReceiptIndianRupee size={15}/><span>All sessions</span><strong>{business._count?.payments || 0}</strong></div>
+          <div><Link2 size={15}/><span>Default link</span><strong>{business.defaultLink?.active ? 'Active' : 'None'}</strong></div>
+        </div>
       </article>
       <article className="panel">
         <div className="panel-heading"><div><h3>Users</h3></div></div>
         <div className="table-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Role</th></tr></thead><tbody>
-          {business.users.length ? business.users.map(u => <tr key={u.id}><td><strong>{u.name}</strong></td><td>{u.email}</td><td>{u.role}</td></tr>) : <tr><td colSpan="3" className="empty-cell">No users yet.</td></tr>}
+          {business.users.length ? business.users.map(u => <tr key={u.id}><td><strong>{u.name}</strong><small>{u.mobile || '—'}</small></td><td>{u.email}<small>{u.emailVerifiedAt ? 'Activated' : 'Not activated'}</small></td><td>{u.role}</td></tr>) : <tr><td colSpan="3" className="empty-cell">No users yet.</td></tr>}
+        </tbody></table></div>
+      </article>
+    </section>
+
+    <section className="panel">
+      <div className="panel-heading"><div><h3>Sub-business supervision</h3><p>Collections are still settled through the same business account, but reporting is separated by unit.</p></div><Building2/></div>
+      <div className="table-wrap"><table><thead><tr><th>Unit</th><th>Code</th><th>Status</th><th>Payments</th><th>Total amount</th></tr></thead><tbody>
+        <tr><td><strong>Main business</strong><small>Payments without a sub-business tag</small></td><td>main</td><td><span className="status status-active"><i/>ACTIVE</span></td><td>{mainUnitTotals?.count || 0}</td><td>₹{Number(mainUnitTotals?.amount || 0).toLocaleString('en-IN')}</td></tr>
+        {business.businessUnits?.length ? business.businessUnits.map(unit => <tr key={unit.id}><td><strong>{unit.name}</strong><small>{unit.description || '—'}</small></td><td><code>{unit.code}</code></td><td><span className={`status ${unit.active ? 'status-active' : 'status-disabled'}`}><i/>{unit.active ? 'ACTIVE' : 'DISABLED'}</span></td><td>{unit.totals?.count || 0}</td><td>₹{Number(unit.totals?.amount || 0).toLocaleString('en-IN')}</td></tr>) : null}
+      </tbody></table></div>
+    </section>
+
+    <article className="panel">
+      <div className="panel-heading"><div><h3>Merchant connections</h3><p>Super-admin can inspect operational setup without exposing stored tokens.</p></div></div>
+      <div className="table-wrap"><table><thead><tr><th>Provider</th><th>Label</th><th>Merchant</th><th>Bank / UPI</th><th>Status</th></tr></thead><tbody>
+        {business.connections.length ? business.connections.map(c => <tr key={c.id}><td><strong>{c.provider}</strong><small>{c.mobile || '—'}</small></td><td>{c.label || '—'}<small>{c.isDefault ? 'Default account' : '—'}</small></td><td><strong>{c.legalBusinessName || c.merchantName || '—'}</strong><small>{c.merchantId || c.merchantMid || '—'}</small></td><td><strong>{c.bankName || '—'}</strong><small>{c.upiId || c.maskedAccountNumber || c.ifsc || '—'}</small></td><td><span className={`status status-${c.status.toLowerCase()}`}><i/>{c.status}</span><small>{c.autoSettlement ? 'Auto settlement' : c.lastError || '—'}</small></td></tr>) : <tr><td colSpan="5" className="empty-cell">No connections yet.</td></tr>}
+      </tbody></table></div>
+    </article>
+
+    <section className="admin-grid">
+      <article className="panel">
+        <div className="panel-heading"><div><h3>Payment status</h3><p>All Pay-Panda payment sessions for this business.</p></div></div>
+        <div className="admin-status-stack">
+          {['SUCCESS', 'PENDING', 'FAILED', 'EXPIRED'].map(status => <div key={status}><span className={`status status-${status.toLowerCase()}`}><i/>{status}</span><strong>{paymentStatusBreakdown[status]?.count || 0}</strong><small>₹{Number(paymentStatusBreakdown[status]?.amount || 0).toLocaleString('en-IN')}</small></div>)}
+        </div>
+      </article>
+      <article className="panel">
+        <div className="panel-heading"><div><h3>API clients</h3><p>Server-to-server apps created by the business.</p></div></div>
+        <div className="table-wrap compact-table"><table><thead><tr><th>App</th><th>Status</th><th>Last used</th></tr></thead><tbody>
+          {business.apiClients?.length ? business.apiClients.map(client => <tr key={client.id}><td><strong>{client.name}</strong><small><code>{client.appId}</code></small></td><td><span className={`status ${client.active ? 'status-active' : 'status-disabled'}`}><i/>{client.active ? 'ACTIVE' : 'REVOKED'}</span></td><td>{formatDate(client.lastUsedAt)}</td></tr>) : <tr><td colSpan="3" className="empty-cell">No API clients yet.</td></tr>}
         </tbody></table></div>
       </article>
     </section>
 
     <article className="panel">
-      <div className="panel-heading"><div><h3>Merchant connections</h3></div></div>
-      <div className="table-wrap"><table><thead><tr><th>Provider</th><th>Label</th><th>Merchant</th><th>Status</th></tr></thead><tbody>
-        {business.connections.length ? business.connections.map(c => <tr key={c.id}><td>{c.provider}</td><td>{c.label || '—'}</td><td>{c.merchantName || '—'}</td><td><span className={`status status-${c.status.toLowerCase()}`}><i/>{c.status}</span></td></tr>) : <tr><td colSpan="4" className="empty-cell">No connections yet.</td></tr>}
+      <div className="panel-heading"><div><h3>Latest Pay-Panda payments</h3><p>Only sessions created through Pay-Panda dashboard/API/default links are shown.</p></div></div>
+      <div className="table-wrap"><table><thead><tr><th>Order</th><th>Sub-business</th><th>Customer / payer</th><th>Connection</th><th>Amount</th><th>Status</th><th>Created / Paid</th><th>RRN</th></tr></thead><tbody>
+        {recentPayments.length ? recentPayments.map(payment => <tr key={payment.id}><td><strong>{payment.clientOrderId}</strong><small>{payment.source}</small></td><td><strong>{payment.businessUnit?.name || 'Main'}</strong><small>{payment.businessUnit?.code || 'main'}</small></td><td><strong>{payment.payerName || payment.customerName || '—'}</strong><small>{payment.payerHandle || payment.customerMobile || payment.reason || '—'}</small></td><td><strong>{payment.connection?.provider || '—'}</strong><small>{payment.connection?.legalBusinessName || payment.connection?.merchantId || '—'}</small></td><td>₹{Number(payment.amount).toFixed(2)}</td><td><span className={`status status-${payment.status.toLowerCase()}`}><i/>{payment.status}</span></td><td>{formatDate(payment.createdAt)}<small>Paid: {formatDate(payment.paidAt)}</small></td><td><code>{payment.bankReferenceNo || '—'}</code></td></tr>) : <tr><td colSpan="8" className="empty-cell">No Pay-Panda payments yet.</td></tr>}
+      </tbody></table></div>
+    </article>
+
+    <article className="panel">
+      <div className="panel-heading"><div><h3>Latest provider transactions</h3><p>BharatPe transaction snapshots imported during verification/reconciliation.</p></div></div>
+      <div className="table-wrap"><table><thead><tr><th>Provider</th><th>Merchant</th><th>Payer</th><th>Amount</th><th>Status</th><th>Paid time</th><th>Bank RRN</th></tr></thead><tbody>
+        {providerTransactions.length ? providerTransactions.map(txn => <tr key={txn.id}><td>{txn.provider}<small>{txn.type || '—'}</small></td><td><strong>{txn.merchantId}</strong><small>{txn.payeeIdentifier || '—'}</small></td><td><strong>{txn.payerName || '—'}</strong><small>{txn.payerHandle || '—'}</small></td><td>₹{Number(txn.amount).toFixed(2)}</td><td><span className={`status status-${String(txn.status).toLowerCase()}`}><i/>{txn.status}</span></td><td>{formatDate(txn.paymentTimestamp)}</td><td><code>{txn.bankReferenceNo || txn.providerTransactionId || '—'}</code></td></tr>) : <tr><td colSpan="7" className="empty-cell">No provider transactions imported yet.</td></tr>}
       </tbody></table></div>
     </article>
 
@@ -131,4 +186,9 @@ export default function AdminBusinessDetailPage() {
       </div>
     </div>}
   </div>;
+}
+
+function formatDate(value) {
+  if (!value) return '—';
+  return new Date(value).toLocaleString();
 }

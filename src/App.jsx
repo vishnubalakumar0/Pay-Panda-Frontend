@@ -29,6 +29,7 @@ import SdkPage from './pages/SdkPage';
 import DocumentationPage from './pages/DocumentationPage';
 import DefaultLinkPage from './pages/DefaultLinkPage';
 import SubscriptionHistoryPage from './pages/SubscriptionHistoryPage';
+import BusinessUnitsPage from './pages/BusinessUnitsPage';
 
 function Protected() {
   const { token, loading } = useAuth();
@@ -56,6 +57,7 @@ export default function App() {
       <Route path="/dashboard" element={<DashboardPage />} />
       <Route path="/connect" element={<ConnectPage />} />
       <Route path="/api-keys" element={<ApiKeysPage />} />
+      <Route path="/business-units" element={<BusinessUnitsPage />} />
       <Route path="/payments/create" element={<CreatePaymentPage />} />
       <Route path="/payments/history" element={<HistoryPage />} />
       <Route path="/payments/:status" element={<HistoryPage />} />

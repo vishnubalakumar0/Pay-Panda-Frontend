@@ -4,7 +4,7 @@ import { useAdminAuth } from '../../state/admin-auth-store';
 import usePageTransition from '../../hooks/usePageTransition';
 import useSmoothScroll from '../../hooks/useSmoothScroll';
 import { LayoutDashboard, Building2, Layers, LogOut, Menu, X, Moon, Sun } from 'lucide-react';
-import payLogo from '../../assets/pay logo.png';
+import payLogo from '../../assets/logo.png';
 
 const items = [
   { to: '/admin/overview', icon: LayoutDashboard, label: 'Overview' },

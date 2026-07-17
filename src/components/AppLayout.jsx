@@ -10,7 +10,7 @@ import {
   Code2, BookOpen, Link2, History, ReceiptIndianRupee, Settings, Headphones,
   LogOut, Menu, X, Moon, Sun, ChevronLeft, ChevronRight, PlusCircle, Building2,
 } from 'lucide-react';
-import payLogo from '../assets/pay logo.png';
+import payLogo from '../assets/logo.png';
 
 const sections = [
   { label: 'Overview', items: [{ to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' }] },

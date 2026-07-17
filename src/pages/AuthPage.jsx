@@ -9,7 +9,7 @@ import PasswordInput from '../components/PasswordInput';
 import AuthLoader from '../components/AuthLoader';
 import OtpInput from '../components/OtpInput';
 import { gsap, REDUCED_MOTION_QUERY, EASE_ENTRANCE } from '../lib/motion';
-import payLogo from '../assets/pay logo.png';
+import payLogo from '../assets/logo.png';
 
 const OTP_RESEND_SECONDS = 60;
 

@@ -5,7 +5,7 @@ import adminApi from '../../lib/adminApi';
 import { useAdminAuth } from '../../state/admin-auth-store';
 import PasswordInput from '../../components/PasswordInput';
 import { useUi } from '../../state/ui-store';
-import payLogo from '../../assets/pay logo.png';
+import payLogo from '../../assets/logo.png';
 
 export default function AdminLoginPage() {
   const [form, setForm] = useState({ email: '', password: '' });

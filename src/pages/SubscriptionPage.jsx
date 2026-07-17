@@ -45,7 +45,7 @@ export default function SubscriptionPage() {
       </div>
     </section>
 
-    <section className="admin-grid">
+    <section className="admin-grid subscription-detail-grid">
       <article className="panel">
         <div className="panel-heading"><div><h3>Per-payment fee schedule</h3><p>The fee steps down automatically as your monthly volume grows.</p></div></div>
         <div className="table-wrap"><table><thead><tr><th>Payments this month</th><th>Fee per payment</th></tr></thead><tbody>
@@ -61,9 +61,9 @@ export default function SubscriptionPage() {
       </article>
       <aside className="panel">
         <div className="panel-heading"><div><h3>How billing works</h3></div></div>
-        <div className="plan-distribution" style={{ padding: '4px 22px 20px' }}>
-          <p style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.7 }}><ReceiptIndianRupee size={14} style={{ verticalAlign: -2, marginRight: 6 }}/>Every successful payment accrues a small platform fee based on how many payments you've processed so far this month.</p>
-          <p style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.7, marginTop: 10 }}><IndianRupee size={14} style={{ verticalAlign: -2, marginRight: 6 }}/>At the end of each month, Pay-Panda generates one invoice for the total accrued fee, payable via UPI from your <Link to="/subscription-history">subscription history</Link> page.</p>
+        <div className="billing-explainer">
+          <p><ReceiptIndianRupee size={14}/>Every successful payment accrues a small platform fee based on how many payments you've processed so far this month.</p>
+          <p><IndianRupee size={14}/>At the end of each month, Pay-Panda generates one invoice for the total accrued fee, payable via UPI from your <Link to="/subscription-history">subscription history</Link> page.</p>
         </div>
       </aside>
     </section>

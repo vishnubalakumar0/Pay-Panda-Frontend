@@ -19,17 +19,17 @@ const sections = [
     { to: '/themes', icon: Palette, label: 'Payment page theme' },
     { to: '/subscription', icon: BadgeIndianRupee, label: 'Subscription' },
   ]},
-  { label: 'API setup', items: [
-    { to: '/api-keys', icon: KeyRound, label: 'App credentials' },
-    { to: '/sdk', icon: Code2, label: 'SDK' },
-    { to: '/documentation', icon: BookOpen, label: 'Documentation' },
-  ]},
   { label: 'Payments', items: [
     { to: '/business-units', icon: Building2, label: 'Sub-businesses' },
     { to: '/payments/create', icon: PlusCircle, label: 'Create payment' },
     { to: '/default-link', icon: Link2, label: 'Default link' },
     { to: '/payments/history', icon: History, label: 'Payment history' },
     { to: '/subscription-history', icon: ReceiptIndianRupee, label: 'Subscription history' },
+  ]},
+  { label: 'API setup', items: [
+    { to: '/api-keys', icon: KeyRound, label: 'App credentials' },
+    { to: '/sdk', icon: Code2, label: 'SDK' },
+    { to: '/documentation', icon: BookOpen, label: 'Documentation' },
   ]},
 ];
 

@@ -46,14 +46,14 @@ float snoise(vec2 v){
   return 130.0 * dot(m, g);
 }
 float bayerDither4x4(vec2 uv) {
-    int x = int(mod(uv.x, 4.0));
-    int y = int(mod(uv.y, 4.0));
-    int matrix[16];
-    matrix[0] = 0; matrix[1] = 8; matrix[2] = 2; matrix[3] = 10;
-    matrix[4] = 12; matrix[5] = 4; matrix[6] = 14; matrix[7] = 6;
-    matrix[8] = 3; matrix[9] = 11; matrix[10] = 1; matrix[11] = 9;
-    matrix[12] = 15; matrix[13] = 7; matrix[14] = 13; matrix[15] = 5;
-    return float(matrix[y * 4 + x]) / 16.0;
+    vec2 p = fract(uv / 4.0);
+    float n = floor(p.x * 4.0) + floor(p.y * 4.0) * 4.0;
+    float m[16];
+    m[0] = 0.0; m[1] = 8.0; m[2] = 2.0; m[3] = 10.0;
+    m[4] = 12.0; m[5] = 4.0; m[6] = 14.0; m[7] = 6.0;
+    m[8] = 3.0; m[9] = 11.0; m[10] = 1.0; m[11] = 9.0;
+    m[12] = 15.0; m[13] = 7.0; m[14] = 13.0; m[15] = 5.0;
+    return m[int(n)] / 16.0;
 }
 void main() {
     vec2 uv = vUv;
@@ -118,7 +118,7 @@ function GradientPlane({ color1, color2, speed = 1 }) {
         vertexShader={vertexShader}
         fragmentShader={fragmentShader}
         uniforms={uniforms}
-        transparent={true}
+        transparent={false}
         depthWrite={false}
         depthTest={false}
       />
@@ -138,12 +138,12 @@ export default function HeroGeometric({
 }) {
   return (
     <div style={{ containerType: "size" }} className={cn("relative w-full min-h-screen flex flex-col items-center overflow-hidden bg-white text-black", className)}>
-      <div className="absolute inset-0 z-0 pointer-events-none">
+      <div className="absolute inset-0 z-0" style={{ pointerEvents: 'none', width: '100%', height: '100%' }}>
         <Canvas
           camera={{ position: [0, 0, 1] }}
-          dpr={[1, 1]}
-          gl={{ antialias: false, alpha: true }}
-          style={{ width: '100%', height: '100%' }}
+          dpr={[1, 1.5]}
+          gl={{ antialias: true, alpha: false }}
+          style={{ width: '100%', height: '100%', display: 'block' }}
         >
           <GradientPlane color1={color1} color2={color2} speed={speed} />
         </Canvas>

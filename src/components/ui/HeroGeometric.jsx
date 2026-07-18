@@ -18,6 +18,7 @@ uniform float uTime;
 uniform vec2 uResolution;
 uniform vec3 uColor1;
 uniform vec3 uColor2;
+uniform vec3 uBgColor;
 varying vec2 vUv;
 vec3 permute(vec3 x) { return mod(((x*34.0)+1.0)*x, 289.0); }
 float snoise(vec2 v){
@@ -46,14 +47,25 @@ float snoise(vec2 v){
   return 130.0 * dot(m, g);
 }
 float bayerDither4x4(vec2 uv) {
-    vec2 p = fract(uv / 4.0);
-    float n = floor(p.x * 4.0) + floor(p.y * 4.0) * 4.0;
-    float m[16];
-    m[0] = 0.0; m[1] = 8.0; m[2] = 2.0; m[3] = 10.0;
-    m[4] = 12.0; m[5] = 4.0; m[6] = 14.0; m[7] = 6.0;
-    m[8] = 3.0; m[9] = 11.0; m[10] = 1.0; m[11] = 9.0;
-    m[12] = 15.0; m[13] = 7.0; m[14] = 13.0; m[15] = 5.0;
-    return m[int(n)] / 16.0;
+    float x = mod(uv.x, 4.0);
+    float y = mod(uv.y, 4.0);
+    float index = floor(y) * 4.0 + floor(x);
+    if (index < 1.0) return 0.0;
+    if (index < 2.0) return 8.0 / 16.0;
+    if (index < 3.0) return 2.0 / 16.0;
+    if (index < 4.0) return 10.0 / 16.0;
+    if (index < 5.0) return 12.0 / 16.0;
+    if (index < 6.0) return 4.0 / 16.0;
+    if (index < 7.0) return 14.0 / 16.0;
+    if (index < 8.0) return 6.0 / 16.0;
+    if (index < 9.0) return 3.0 / 16.0;
+    if (index < 10.0) return 11.0 / 16.0;
+    if (index < 11.0) return 1.0 / 16.0;
+    if (index < 12.0) return 9.0 / 16.0;
+    if (index < 13.0) return 15.0 / 16.0;
+    if (index < 14.0) return 7.0 / 16.0;
+    if (index < 15.0) return 13.0 / 16.0;
+    return 5.0 / 16.0;
 }
 void main() {
     vec2 uv = vUv;
@@ -86,14 +98,14 @@ void main() {
     }
     vec2 cornerDist = vec2(uv.x, uv.y);
     float fadeMask = smoothstep(0.0, 0.25, length(cornerDist));
-    color = mix(vec3(1.0), color, fadeMask);
+    color = mix(uBgColor, color, fadeMask);
     float vignette = smoothstep(1.2, 0.3, length(uv - 0.5));
     color = mix(color, color * 0.95, (1.0 - vignette) * 0.3);
     gl_FragColor = vec4(color, 1.0);
 }
 `;
 
-function GradientPlane({ color1, color2, speed = 1 }) {
+function GradientPlane({ color1, color2, bgColor = "#ffffff", speed = 1 }) {
   const meshRef = useRef(null);
   const uniforms = useMemo(
     () => ({
@@ -101,8 +113,9 @@ function GradientPlane({ color1, color2, speed = 1 }) {
       uResolution: { value: new THREE.Vector2(1000, 1000) },
       uColor1: { value: new THREE.Color(color1) },
       uColor2: { value: new THREE.Color(color2) },
+      uBgColor: { value: new THREE.Color(bgColor) },
     }),
-    [color1, color2]
+    [color1, color2, bgColor]
   );
   useFrame((state) => {
     const { clock, size } = state;
@@ -110,6 +123,7 @@ function GradientPlane({ color1, color2, speed = 1 }) {
     uniforms.uResolution.value.set(size.width, size.height);
     uniforms.uColor1.value.set(color1);
     uniforms.uColor2.value.set(color2);
+    uniforms.uBgColor.value.set(bgColor);
   });
   return (
     <mesh ref={meshRef} scale={[2, 2, 1]}>
@@ -118,7 +132,7 @@ function GradientPlane({ color1, color2, speed = 1 }) {
         vertexShader={vertexShader}
         fragmentShader={fragmentShader}
         uniforms={uniforms}
-        transparent={false}
+        transparent={true}
         depthWrite={false}
         depthTest={false}
       />
@@ -132,20 +146,21 @@ export default function HeroGeometric({
   description,
   color1 = "#3B82F6",
   color2 = "#F0F9FF",
+  bgColor = "#ffffff",
   speed = 1,
   className,
   children,
 }) {
   return (
-    <div style={{ containerType: "size" }} className={cn("relative w-full min-h-screen flex flex-col items-center overflow-hidden bg-white text-black", className)}>
+    <div style={{ containerType: "size" }} className={cn("relative w-full min-h-screen flex flex-col items-center overflow-hidden bg-transparent", className)}>
       <div className="absolute inset-0 z-0" style={{ pointerEvents: 'none', width: '100%', height: '100%' }}>
         <Canvas
           camera={{ position: [0, 0, 1] }}
           dpr={[1, 1.5]}
-          gl={{ antialias: true, alpha: false }}
+          gl={{ antialias: true, alpha: true }}
           style={{ width: '100%', height: '100%', display: 'block' }}
         >
-          <GradientPlane color1={color1} color2={color2} speed={speed} />
+          <GradientPlane color1={color1} color2={color2} bgColor={bgColor} speed={speed} />
         </Canvas>
       </div>
       {(title1 || title2 || description) && !children && (

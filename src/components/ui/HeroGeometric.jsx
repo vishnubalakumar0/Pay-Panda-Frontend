@@ -137,7 +137,7 @@ export default function HeroGeometric({
   children,
 }) {
   return (
-    <div className={cn("relative w-full min-h-screen flex flex-col items-center overflow-hidden bg-white text-black", className)}>
+    <div style={{ containerType: "size" }} className={cn("relative w-full min-h-screen flex flex-col items-center overflow-hidden bg-white text-black", className)}>
       <div className="absolute inset-0 z-0 pointer-events-none">
         <Canvas
           camera={{ position: [0, 0, 1] }}

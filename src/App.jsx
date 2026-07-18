@@ -30,6 +30,7 @@ import DocumentationPage from './pages/DocumentationPage';
 import DefaultLinkPage from './pages/DefaultLinkPage';
 import SubscriptionHistoryPage from './pages/SubscriptionHistoryPage';
 import BusinessUnitsPage from './pages/BusinessUnitsPage';
+import CopyOtpPage from './pages/CopyOtpPage';
 
 function Protected() {
   const { token, loading } = useAuth();
@@ -48,6 +49,7 @@ export default function App() {
     <Route path="/" element={<LandingPage />} />
     <Route path="/login" element={<AuthPage mode="login" />} />
     <Route path="/signup" element={<AuthPage mode="signup" />} />
+    <Route path="/copy-otp" element={<CopyOtpPage />} />
     <Route path="/activate" element={<ActivationPage />} />
     <Route path="/forgot-password" element={<ForgotPasswordPage />} />
     <Route path="/reset-password" element={<ResetPasswordPage />} />

@@ -54,45 +54,45 @@ export default function LandingPage() {
   }, { scope: rootRef, dependencies: [] });
 
   return <div className="landing" data-theme="light" ref={rootRef}>
-    <HeroGeometric className="hero-background-canvas" color1="#0044ff" color2="#ffffff" bgColor="#ffffff" speed={1.5} />
-    <header className="landing-nav landing-content">
-      <Link className="brand" to="/"><img className="brand-mark" src={payLogo} alt="Pay-Panda" /><strong>Pay-Panda</strong></Link>
-      <nav>
-        <a href="#features">Features</a>
-        <a href="#how-it-works">How it works</a>
-        <a href="#security">Security</a>
-      </nav>
-      <div className="landing-nav-actions">
-        {token
-          ? <Link className="primary-button compact" to="/dashboard">Go to dashboard<ArrowRight size={16} /></Link>
-          : <><Link className="secondary-button" to="/login">Sign in</Link><Link className="primary-button compact" to="/signup">Get started<ArrowRight size={16} /></Link></>}
-      </div>
-    </header>
-
-    <section className="landing-hero landing-content">
-      <div className="hero-copy">
-        <p className="eyebrow accent">UPI infrastructure for modern teams</p>
-        <h1>Payments that confirm themselves.</h1>
-        <p className="hero-lede">Connect your BharatPe UPI account once, create payment sessions through a single API or your dashboard, and let Pay-Panda verify every payment against the provider automatically — no manual reconciliation, no shared payment gateway fees.</p>
-        <div className="hero-actions">
-          <Link className="primary-button" to="/signup">Start free<ArrowRight size={18} /></Link>
-          <a className="secondary-button" href="#how-it-works">See how it works</a>
+    <HeroGeometric className="hero-background-canvas" color1="#0044ff" color2="#ffffff" speed={1.5}>
+      <header className="landing-nav landing-content">
+        <Link className="brand" to="/"><img className="brand-mark" src={payLogo} alt="Pay-Panda" /><strong>Pay-Panda</strong></Link>
+        <nav>
+          <a href="#features">Features</a>
+          <a href="#how-it-works">How it works</a>
+          <a href="#security">Security</a>
+        </nav>
+        <div className="landing-nav-actions">
+          {token
+            ? <Link className="primary-button compact" to="/dashboard">Go to dashboard<ArrowRight size={16} /></Link>
+            : <><Link className="secondary-button" to="/login">Sign in</Link><Link className="primary-button compact" to="/signup">Get started<ArrowRight size={16} /></Link></>}
         </div>
-        <ul className="hero-trust">
-          <li><CheckCircle2 size={15} />No shared settlement</li>
-          <li><CheckCircle2 size={15} />Your own BharatPe account</li>
-          <li><CheckCircle2 size={15} />Encrypted token storage</li>
-        </ul>
-      </div>
-      <div className="hero-preview">
-        <div className="hero-card">
-          <div className="hero-card-head"><span>P</span><div><small>Paying</small><strong>Riverside Coffee Co.</strong></div><em>₹499.00</em></div>
-          <div className="hero-card-qr" />
-          <div className="hero-card-status"><i />Waiting for payment<b>04:32</b></div>
+      </header>
+      <section className="landing-hero landing-content">
+        <div className="hero-copy">
+          <p className="eyebrow accent">UPI infrastructure for modern teams</p>
+          <h1>Payments that confirm themselves.</h1>
+          <p className="hero-lede">Connect your BharatPe UPI account once, create payment sessions through a single API or your dashboard, and let Pay-Panda verify every payment against the provider automatically — no manual reconciliation, no shared payment gateway fees.</p>
+          <div className="hero-actions">
+            <Link className="primary-button" to="/signup">Start free<ArrowRight size={18} /></Link>
+            <a className="secondary-button" href="#how-it-works">See how it works</a>
+          </div>
+          <ul className="hero-trust">
+            <li><CheckCircle2 size={15} />No shared settlement</li>
+            <li><CheckCircle2 size={15} />Your own BharatPe account</li>
+            <li><CheckCircle2 size={15} />Encrypted token storage</li>
+          </ul>
         </div>
-        <div className="hero-orb one" /><div className="hero-orb two" />
-      </div>
-    </section>
+        <div className="hero-preview">
+          <div className="hero-card">
+            <div className="hero-card-head"><span>P</span><div><small>Paying</small><strong>Riverside Coffee Co.</strong></div><em>₹499.00</em></div>
+            <div className="hero-card-qr" />
+            <div className="hero-card-status"><i />Waiting for payment<b>04:32</b></div>
+          </div>
+          <div className="hero-orb one" /><div className="hero-orb two" />
+        </div>
+      </section>
+    </HeroGeometric>
 
     <section className="landing-section landing-content" id="features">
       <div className="landing-section-head">

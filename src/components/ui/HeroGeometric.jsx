@@ -105,7 +105,6 @@ void main() {
 `;
 
 function GradientPlane({ color1, color2, bgColor = "#ffffff", speed = 1 }) {
-  const meshRef = useRef(null);
   const uniforms = useMemo(
     () => ({
       uTime: { value: 0 },
@@ -116,17 +115,16 @@ function GradientPlane({ color1, color2, bgColor = "#ffffff", speed = 1 }) {
     }),
     [color1, color2, bgColor]
   );
-  useFrame((state, delta) => {
-    if (!meshRef.current) return;
-    const mat = meshRef.current.material;
-    mat.uniforms.uTime.value += delta * speed;
-    mat.uniforms.uResolution.value.set(state.size.width, state.size.height);
-    mat.uniforms.uColor1.value.set(color1);
-    mat.uniforms.uColor2.value.set(color2);
-    mat.uniforms.uBgColor.value.set(bgColor);
+  useFrame((state) => {
+    const { clock, size } = state;
+    uniforms.uTime.value = clock.getElapsedTime() * speed;
+    uniforms.uResolution.value.set(size.width, size.height);
+    uniforms.uColor1.value.set(color1);
+    uniforms.uColor2.value.set(color2);
+    uniforms.uBgColor.value.set(bgColor);
   });
   return (
-    <mesh ref={meshRef} scale={[2, 2, 1]}>
+    <mesh scale={[2, 2, 1]}>
       <planeGeometry args={[2, 2]} />
       <shaderMaterial
         vertexShader={vertexShader}

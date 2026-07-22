@@ -54,7 +54,7 @@ export default function LandingPage() {
   }, { scope: rootRef, dependencies: [] });
 
   return <div className="landing" data-theme="light" ref={rootRef}>
-    <HeroGeometric className="hero-background-canvas" color1="#0044ff" color2="#ffffff" speed={1.5}>
+    <HeroGeometric color1="#0044ff" color2="#ffffff" speed={1.5}>
       <header className="landing-nav landing-content">
         <Link className="brand" to="/"><img className="brand-mark" src={payLogo} alt="Pay-Panda" /><strong>Pay-Panda</strong></Link>
         <nav>
